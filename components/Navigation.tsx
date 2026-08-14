@@ -61,7 +61,7 @@ export default function Navigation({ activePage }: NavigationProps) {
           </ul>
         </nav>
 
-        <div className="px-4 py-4 border-t border-[#c2c6d3]">
+        <div className="px-4 py-4 border-t border-[#c2c6d3] space-y-3">
           <Link
             href="/scan"
             className="w-full flex justify-center items-center gap-2 bg-[#004287] text-white py-3 rounded-full text-sm font-semibold hover:bg-[#1e5aa8] transition-colors"
@@ -69,6 +69,15 @@ export default function Navigation({ activePage }: NavigationProps) {
             <span className="material-symbols-outlined text-[20px]">add_a_photo</span>
             Start New Scan
           </Link>
+          <form action="/auth/signout" method="post">
+            <button
+              type="submit"
+              className="w-full flex justify-center items-center gap-2 border border-[#c2c6d3] text-[#424751] py-3 rounded-full text-sm font-medium hover:bg-[#eff4ff] hover:text-[#0b1c30] transition-colors"
+            >
+              <span className="material-symbols-outlined text-[20px]">logout</span>
+              Sign Out
+            </button>
+          </form>
         </div>
       </aside>
 
