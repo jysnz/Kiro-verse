@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DermAI - Detection Results</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed": "#d4e3ff",
+                        "on-primary-fixed": "#001b3e",
+                        "on-surface": "#0b1c30",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed": "#dde3eb",
+                        "surface-variant": "#d3e4fe",
+                        "on-primary": "#ffffff",
+                        "tertiary-container": "#555c62",
+                        "tertiary": "#3e444b",
+                        "surface-container-high": "#dce9ff",
+                        "inverse-on-surface": "#eaf1ff",
+                        "on-surface-variant": "#424751",
+                        "on-tertiary-fixed-variant": "#41474e",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary": "#005fac",
+                        "on-tertiary-fixed": "#161c22",
+                        "surface-container-low": "#eff4ff",
+                        "on-error-container": "#93000a",
+                        "surface-container-highest": "#d3e4fe",
+                        "outline-variant": "#c2c6d3",
+                        "inverse-surface": "#213145",
+                        "inverse-primary": "#aac7ff",
+                        "on-secondary-fixed": "#001c39",
+                        "primary-fixed-dim": "#aac7ff",
+                        "background": "#f8f9ff",
+                        "secondary-container": "#5fa6fd",
+                        "surface-container": "#e5eeff",
+                        "secondary-fixed-dim": "#a4c9ff",
+                        "on-tertiary-container": "#ced4dc",
+                        "primary-container": "#1e5aa8",
+                        "primary": "#004287",
+                        "on-secondary": "#ffffff",
+                        "surface-dim": "#cbdbf5",
+                        "error": "#ba1a1a",
+                        "outline": "#737782",
+                        "on-primary-fixed-variant": "#00458d",
+                        "tertiary-fixed-dim": "#c1c7cf",
+                        "surface-bright": "#f8f9ff",
+                        "on-error": "#ffffff",
+                        "on-primary-container": "#bed4ff",
+                        "surface": "#f8f9ff",
+                        "on-secondary-fixed-variant": "#004884",
+                        "error-container": "#ffdad6",
+                        "on-secondary-container": "#003a6d",
+                        "primary-fixed": "#d6e3ff",
+                        "on-background": "#0b1c30",
+                        "surface-tint": "#235eac"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-max": "1280px",
+                        "margin-mobile": "16px",
+                        "gutter": "24px",
+                        "margin-desktop": "40px",
+                        "base": "8px",
+                        "stack-lg": "48px",
+                        "stack-sm": "12px",
+                        "stack-md": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Public Sans"],
+                        "headline-lg": ["Public Sans"],
+                        "headline-lg-mobile": ["Public Sans"],
+                        "label-md": ["Public Sans"],
+                        "label-sm": ["Public Sans"],
+                        "headline-xl": ["Public Sans"],
+                        "body-lg": ["Public Sans"],
+                        "body-md": ["Public Sans"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                        "headline-xl": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .soft-shadow {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex">
+<!-- SideNavBar -->
+<nav class="hidden md:flex flex-col h-full py-6 bg-surface-container dark:bg-inverse-surface border-r border-outline-variant shadow-md docked left-0 fixed w-64 z-50">
+<div class="px-6 mb-8">
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim">DermAI Network</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Skin health monitoring</p>
+</div>
+<div class="flex-1 px-4 space-y-2">
+<a class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-variant dark:hover:bg-on-surface-variant/10 rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-md text-label-md">Home</span>
+</a>
+<a class="bg-primary-container dark:bg-primary text-on-primary-container dark:text-on-primary rounded-xl mx-2 px-4 py-3 flex items-center gap-3 scale-98 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="medical_services">medical_services</span>
+<span class="font-label-md text-label-md">Scan</span>
+</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-variant dark:hover:bg-on-surface-variant/10 rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="map">map</span>
+<span class="font-label-md text-label-md">Map</span>
+</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-variant dark:hover:bg-on-surface-variant/10 rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="font-label-md text-label-md">Alerts</span>
+</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-variant dark:hover:bg-on-surface-variant/10 rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-md text-label-md">Profile</span>
+</a>
+</div>
+<div class="px-6 mt-auto">
+<button class="w-full bg-primary text-on-primary py-3 rounded-full font-label-md text-label-md hover:opacity-90 transition-opacity">
+                Start New Scan
+            </button>
+</div>
+</nav>
+<!-- TopNavBar (Mobile Only) -->
+<nav class="md:hidden flex justify-between items-center w-full px-margin-mobile mx-auto h-16 bg-surface dark:bg-inverse-surface border-b border-outline-variant shadow-sm fixed top-0 left-0 right-0 z-50">
+<div class="font-headline-lg-mobile text-headline-lg-mobile text-primary dark:text-primary-fixed-dim tracking-tight">DermAI</div>
+<button class="text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+</nav>
+<!-- Main Content -->
+<main class="flex-1 md:ml-64 pt-20 md:pt-10 px-margin-mobile md:px-margin-desktop pb-stack-lg max-w-container-max mx-auto w-full">
+<!-- Header Section -->
+<header class="mb-stack-lg flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant mb-2">Scan Completed: Oct 24, 2024</p>
+<h2 class="font-headline-xl text-headline-xl text-on-background">Analysis Results</h2>
+</div>
+<div class="flex gap-3 w-full md:w-auto">
+<button class="flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-surface-container text-primary font-label-md text-label-md border border-outline-variant hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined" data-icon="bookmark">bookmark</span>
+                    Save to History
+                </button>
+<button class="flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-primary text-on-primary font-label-md text-label-md hover:bg-primary/90 transition-colors">
+<span class="material-symbols-outlined" data-icon="local_hospital">local_hospital</span>
+                    Find Clinic
+                </button>
+</div>
+</header>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Primary Result Card -->
+<div class="md:col-span-8 bg-surface-container-lowest rounded-[24px] border border-outline-variant soft-shadow overflow-hidden flex flex-col">
+<div class="h-2 bg-[#ffb4ab]"></div> <!-- Warning Indicator -->
+<div class="p-8 flex-1 flex flex-col justify-center">
+<div class="flex items-center gap-4 mb-6">
+<div class="w-16 h-16 rounded-full bg-error-container text-on-error-container flex items-center justify-center">
+<span class="material-symbols-outlined text-4xl" data-icon="vital_signs" style="font-variation-settings: 'FILL' 1;">vital_signs</span>
+</div>
+<div>
+<h3 class="font-headline-lg text-headline-lg text-on-background">Eczema (Atopic Dermatitis)</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="px-3 py-1 bg-surface-variant text-on-surface-variant rounded-full font-label-sm text-label-sm">High Confidence</span>
+<span class="font-headline-md text-headline-md text-primary">94%</span>
+</div>
+</div>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
+                        Based on the visual analysis, the localized inflammation, erythema (redness), and textural changes strongly indicate a presentation of Eczema. This condition is characterized by a disrupted skin barrier, leading to moisture loss and increased susceptibility to irritants.
+                    </p>
+</div>
+</div>
+<!-- Uploaded Image Reference -->
+<div class="md:col-span-4 bg-surface-container-lowest rounded-[24px] border border-outline-variant soft-shadow p-4 flex flex-col">
+<h4 class="font-label-md text-label-md text-on-surface-variant mb-4 px-2">Analyzed Region</h4>
+<div class="w-full h-48 rounded-[16px] overflow-hidden relative group">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A close-up, highly detailed clinical photograph of human skin showing a patch of redness and slight flaking indicative of eczema. The lighting is bright, neutral, and evenly distributed to highlight skin texture without harsh shadows. The overall aesthetic is clinical, clean, and medical, utilizing a soft light mode color palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnipP88gWoVdnqk6FMgaKN6KnRcmRUSDz6VCdItM1BP3tvRpBz5E3jaLi3GZ8cHIBTvpDxtGyVkb2G1FDlP8vw8yIntXVfmLN21LrR69iUl5WI88mDHS3qoSAUlcozXc_LJhI-z2nZWejpPD3nlZk-9GaJxXNCQJzbEXoJqc_-_5ZKAUAC5TBLbgcG1YELMz4c1CAGVIiCZS4FNPFvxcBSosqPcw_GCcCxQdeldQ95upl2BpqxL3btgA"/>
+<div class="absolute inset-0 border-2 border-primary/50 rounded-[16px] m-2 pointer-events-none"></div>
+</div>
+</div>
+<!-- Symptoms List -->
+<div class="md:col-span-6 bg-surface-container-lowest rounded-[24px] border border-outline-variant soft-shadow p-8">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary" data-icon="list_alt">list_alt</span>
+<h4 class="font-headline-md text-headline-md text-on-background">Observed Symptoms</h4>
+</div>
+<ul class="space-y-4">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-outline mt-1" data-icon="check_circle">check_circle</span>
+<div>
+<p class="font-label-md text-label-md text-on-background">Intense Pruritus (Itching)</p>
+<p class="font-body-sm text-body-md text-on-surface-variant">Often worsening at night, leading to scratching and further irritation.</p>
+</div>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-outline mt-1" data-icon="check_circle">check_circle</span>
+<div>
+<p class="font-label-md text-label-md text-on-background">Erythematous Patches</p>
+<p class="font-body-sm text-body-md text-on-surface-variant">Red to brownish-gray patches, commonly on flexural areas.</p>
+</div>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-outline mt-1" data-icon="check_circle">check_circle</span>
+<div>
+<p class="font-label-md text-label-md text-on-background">Dry, Scaly Skin</p>
+<p class="font-body-sm text-body-md text-on-surface-variant">Thickened, cracked, or scaly skin texture indicating compromised barrier.</p>
+</div>
+</li>
+</ul>
+</div>
+<!-- Care Tips & Remedies -->
+<div class="md:col-span-6 bg-surface-container-lowest rounded-[24px] border border-outline-variant soft-shadow p-8">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary" data-icon="healing">healing</span>
+<h4 class="font-headline-md text-headline-md text-on-background">Immediate Care Plan</h4>
+</div>
+<div class="grid grid-cols-1 gap-4">
+<div class="p-4 rounded-[16px] bg-surface-container border border-outline-variant/50">
+<h5 class="font-label-md text-label-md text-on-background mb-1">Moisturize Frequently</h5>
+<p class="font-body-sm text-body-md text-on-surface-variant">Apply thick emollients or ointments within 3 minutes of bathing to lock in moisture.</p>
+</div>
+<div class="p-4 rounded-[16px] bg-surface-container border border-outline-variant/50">
+<h5 class="font-label-md text-label-md text-on-background mb-1">Identify Triggers</h5>
+<p class="font-body-sm text-body-md text-on-surface-variant">Avoid harsh soaps, wool fabrics, and sudden temperature changes.</p>
+</div>
+<div class="p-4 rounded-[16px] bg-error-container/30 border border-[#ffb4ab]">
+<h5 class="font-label-md text-label-md text-[#93000a] mb-1 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="warning">warning</span>
+                            When to see a doctor
+                        </h5>
+<p class="font-body-sm text-body-md text-[#93000a]">If symptoms are severe, affecting sleep, or showing signs of infection (yellow crusts).</p>
+</div>
+</div>
+</div>
+<!-- References -->
+<div class="md:col-span-12 bg-surface-container-lowest rounded-[24px] border border-outline-variant soft-shadow p-6 flex flex-col md:flex-row items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="menu_book">menu_book</span>
+<span class="font-label-md text-label-md text-on-surface-variant">Clinical References:</span>
+</div>
+<div class="flex flex-wrap gap-3">
+<a class="px-4 py-2 rounded-full border border-outline-variant text-primary font-label-sm text-label-sm hover:bg-surface-variant transition-colors flex items-center gap-1" href="#">
+                        AAD Guidelines
+                        <span class="material-symbols-outlined text-[16px]" data-icon="open_in_new">open_in_new</span>
+</a>
+<a class="px-4 py-2 rounded-full border border-outline-variant text-primary font-label-sm text-label-sm hover:bg-surface-variant transition-colors flex items-center gap-1" href="#">
+                        Mayo Clinic: Eczema
+                        <span class="material-symbols-outlined text-[16px]" data-icon="open_in_new">open_in_new</span>
+</a>
+</div>
+</div>
+</div>
+</main>
+</body></html>

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DermAI Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed": "#d4e3ff",
+                        "on-primary-fixed": "#001b3e",
+                        "on-surface": "#0b1c30",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed": "#dde3eb",
+                        "surface-variant": "#d3e4fe",
+                        "on-primary": "#ffffff",
+                        "tertiary-container": "#555c62",
+                        "tertiary": "#3e444b",
+                        "surface-container-high": "#dce9ff",
+                        "inverse-on-surface": "#eaf1ff",
+                        "on-surface-variant": "#424751",
+                        "on-tertiary-fixed-variant": "#41474e",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary": "#005fac",
+                        "on-tertiary-fixed": "#161c22",
+                        "surface-container-low": "#eff4ff",
+                        "on-error-container": "#93000a",
+                        "surface-container-highest": "#d3e4fe",
+                        "outline-variant": "#c2c6d3",
+                        "inverse-surface": "#213145",
+                        "inverse-primary": "#aac7ff",
+                        "on-secondary-fixed": "#001c39",
+                        "primary-fixed-dim": "#aac7ff",
+                        "background": "#f8f9ff",
+                        "secondary-container": "#5fa6fd",
+                        "surface-container": "#e5eeff",
+                        "secondary-fixed-dim": "#a4c9ff",
+                        "on-tertiary-container": "#ced4dc",
+                        "primary-container": "#1e5aa8",
+                        "primary": "#004287",
+                        "on-secondary": "#ffffff",
+                        "surface-dim": "#cbdbf5",
+                        "error": "#ba1a1a",
+                        "outline": "#737782",
+                        "on-primary-fixed-variant": "#00458d",
+                        "tertiary-fixed-dim": "#c1c7cf",
+                        "surface-bright": "#f8f9ff",
+                        "on-error": "#ffffff",
+                        "on-primary-container": "#bed4ff",
+                        "surface": "#f8f9ff",
+                        "on-secondary-fixed-variant": "#004884",
+                        "error-container": "#ffdad6",
+                        "on-secondary-container": "#003a6d",
+                        "primary-fixed": "#d6e3ff",
+                        "on-background": "#0b1c30",
+                        "surface-tint": "#235eac"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-max": "1280px",
+                        "margin-mobile": "16px",
+                        "gutter": "24px",
+                        "margin-desktop": "40px",
+                        "base": "8px",
+                        "stack-lg": "48px",
+                        "stack-sm": "12px",
+                        "stack-md": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Public Sans"],
+                        "headline-lg": ["Public Sans"],
+                        "headline-lg-mobile": ["Public Sans"],
+                        "label-md": ["Public Sans"],
+                        "label-sm": ["Public Sans"],
+                        "headline-xl": ["Public Sans"],
+                        "body-lg": ["Public Sans"],
+                        "body-md": ["Public Sans"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "600" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "headline-xl": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+        }
+        .soft-shadow {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen font-body-md antialiased overflow-x-hidden">
+<!-- Mobile Top Nav (Hidden on Desktop) -->
+<nav class="md:hidden flex justify-between items-center w-full px-margin-mobile py-4 bg-surface border-b border-outline-variant shadow-sm z-50 sticky top-0">
+<div class="font-headline-lg-mobile text-headline-lg-mobile text-primary tracking-tight">DermAI</div>
+<button class="text-on-surface-variant p-2 rounded-full hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">menu</span>
+</button>
+</nav>
+<div class="flex h-screen overflow-hidden relative w-full max-w-[1600px] mx-auto">
+<!-- SideNavBar -->
+<aside class="hidden lg:flex flex-col h-full py-6 bg-surface-container w-64 border-r border-outline-variant shadow-md flex-shrink-0 z-40 relative">
+<div class="px-6 mb-8 flex flex-col items-center">
+<div class="w-16 h-16 rounded-full bg-primary-container flex items-center justify-center mb-4 overflow-hidden border-2 border-surface">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="A professional headshot of a user against a clean, light medical-themed background. The lighting is soft and even, highlighting a friendly but focused expression. The color palette is bright and modern, aligning with a high-end health application." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQZYQ0WjlcCp0shSc9oIjWP4pOSWjMZ9hSClJyTTj5MG7innIKPfjDw_5PQOwtq3jlSLHaqZlueFQqUEy5yzPyAmjZQ2FPTsjnzVjo6iFxoKFmhipSXzdrEcGarFpeuQy-cVaHVl2Xn8JpV6ANx8RY6PxhhlLTCbmdjqJ9wVMpItD2qm5pp70D8hCcMLi63xYpukrlFrlNEKc05EX47CnBd7Rme3LDm9brPK7IY5ocpTQNGECLwZLtDg"/>
+</div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary text-center">DermAI Network</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-1">Skin health monitoring</p>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="bg-primary-container text-on-primary-container rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-transform duration-200 scale-98 shadow-sm" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-md text-label-md">Home</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-variant rounded-xl mx-2 px-4 py-3 flex items-center gap-3 hover:bg-surface-variant/20 transition-all" href="#">
+<span class="material-symbols-outlined">medical_services</span>
+<span class="font-label-md text-label-md">Scan</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-variant rounded-xl mx-2 px-4 py-3 flex items-center gap-3 hover:bg-surface-variant/20 transition-all" href="#">
+<span class="material-symbols-outlined">map</span>
+<span class="font-label-md text-label-md">Map</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-variant rounded-xl mx-2 px-4 py-3 flex items-center gap-3 hover:bg-surface-variant/20 transition-all" href="#">
+<span class="material-symbols-outlined">notifications</span>
+<span class="font-label-md text-label-md">Alerts</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-variant rounded-xl mx-2 px-4 py-3 flex items-center gap-3 hover:bg-surface-variant/20 transition-all" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-md text-label-md">Profile</span>
+</a>
+</nav>
+<div class="px-4 mt-auto">
+<button class="w-full bg-primary text-on-primary font-label-md text-label-md py-3 px-4 rounded-full flex justify-center items-center gap-2 hover:bg-on-primary-fixed-variant transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[20px]">add_a_photo</span>
+                    Start New Scan
+                </button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 overflow-y-auto bg-background p-margin-mobile md:p-margin-desktop relative">
+<!-- Subtle Background Pattern -->
+<div class="absolute inset-0 pointer-events-none opacity-[0.03] z-0" style="background-image: radial-gradient(circle at 2px 2px, #004287 1px, transparent 0); background-size: 32px 32px;"></div>
+<div class="max-w-container-max mx-auto relative z-10">
+<!-- Header Section -->
+<header class="mb-stack-lg flex justify-between items-end">
+<div>
+<h2 class="font-headline-lg text-headline-lg md:font-headline-xl md:text-headline-xl text-on-primary-fixed mb-2">Good morning, Alex.</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Here is your daily skin health summary.</p>
+</div>
+</header>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Primary CTA Card (Scan) -->
+<div class="md:col-span-8 bg-surface-container-low rounded-[24px] border border-outline-variant p-8 soft-shadow relative overflow-hidden group cursor-pointer hover:shadow-md transition-shadow duration-300">
+<div class="absolute right-0 top-0 w-1/2 h-full opacity-20 bg-gradient-to-l from-primary-container to-transparent pointer-events-none group-hover:opacity-30 transition-opacity"></div>
+<div class="relative z-10 flex flex-col h-full justify-center items-start">
+<div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-on-primary mb-6 shadow-sm">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">document_scanner</span>
+</div>
+<h3 class="font-headline-lg text-headline-lg text-on-primary-fixed mb-3">Scan Your Skin</h3>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-md mb-8">Perform a quick AI-assisted scan to monitor new spots or track changes in existing moles with clinical precision.</p>
+<button class="bg-primary text-on-primary font-label-md text-label-md px-6 py-3 rounded-full flex items-center gap-2 hover:bg-on-primary-fixed-variant transition-colors group-hover:-translate-y-0.5 duration-200">
+                                Begin Analysis
+                                <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Quick Stats: Alerts -->
+<div class="md:col-span-4 bg-surface rounded-[24px] border border-outline-variant p-6 soft-shadow flex flex-col relative overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-1 bg-error"></div>
+<div class="flex justify-between items-center mb-6">
+<h4 class="font-headline-md text-headline-md text-on-surface">Recent Alerts</h4>
+<span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+<div class="flex-1 flex flex-col justify-center items-center text-center">
+<div class="text-[48px] font-bold text-on-primary-fixed leading-none mb-2">2</div>
+<p class="font-body-md text-body-md text-on-surface-variant">Action required on previous scans.</p>
+</div>
+<button class="mt-4 w-full bg-error-container text-on-error-container font-label-md text-label-md py-2 rounded-lg hover:bg-error/20 transition-colors border border-error/20">
+                            Review Findings
+                        </button>
+</div>
+<!-- Scan History List -->
+<div class="md:col-span-7 bg-surface rounded-[24px] border border-outline-variant p-6 soft-shadow flex flex-col">
+<div class="flex justify-between items-center mb-6">
+<h4 class="font-headline-md text-headline-md text-on-surface">Recent Scans</h4>
+<button class="text-primary font-label-md text-label-md hover:underline flex items-center gap-1">
+                                View All <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</div>
+<div class="flex flex-col gap-4">
+<!-- History Item 1 -->
+<div class="flex items-center justify-between p-4 rounded-xl border border-surface-variant bg-surface-container-lowest hover:border-primary-fixed transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-surface-variant flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">body_system</span>
+</div>
+<div>
+<h5 class="font-label-md text-label-md text-on-surface">Right Forearm Lesion</h5>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-0.5">Oct 24, 2023 • 10:42 AM</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="px-3 py-1 rounded-full bg-surface-variant text-on-surface-variant font-label-sm text-label-sm flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-secondary"></span> Monitor
+                                    </span>
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors">more_vert</span>
+</div>
+</div>
+<!-- History Item 2 -->
+<div class="flex items-center justify-between p-4 rounded-xl border border-surface-variant bg-surface-container-lowest hover:border-primary-fixed transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-surface-variant flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">face</span>
+</div>
+<div>
+<h5 class="font-label-md text-label-md text-on-surface">Left Cheek Routine</h5>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-0.5">Oct 15, 2023 • 09:15 AM</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="px-3 py-1 rounded-full bg-surface-container-high text-on-surface font-label-sm text-label-sm flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-primary"></span> Benign
+                                    </span>
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors">more_vert</span>
+</div>
+</div>
+<!-- History Item 3 -->
+<div class="flex items-center justify-between p-4 rounded-xl border border-error-container bg-surface-container-lowest hover:border-error transition-colors cursor-pointer group relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-error"></div>
+<div class="flex items-center gap-4 pl-2">
+<div class="w-12 h-12 rounded-lg bg-error-container flex items-center justify-center text-error group-hover:bg-error group-hover:text-on-error transition-colors">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">coronavirus</span>
+</div>
+<div>
+<h5 class="font-label-md text-label-md text-on-surface">Upper Back Anomaly</h5>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-0.5">Oct 02, 2023 • 02:30 PM</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="px-3 py-1 rounded-full bg-error-container text-on-error-container font-label-sm text-label-sm flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-error"></span> Consult Doctor
+                                    </span>
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors">more_vert</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Outbreaks Map/Stats -->
+<div class="md:col-span-5 bg-surface rounded-[24px] border border-outline-variant p-0 soft-shadow flex flex-col relative overflow-hidden">
+<div class="h-48 w-full relative bg-surface-variant">
+<!-- Map Background Image -->
+<div class="absolute inset-0 bg-cover bg-center" data-alt="A clean, minimalist, high-tech map interface centered on a metropolitan area, rendered in a light mode palette of soft blues, crisp whites, and gentle grays. Subtle, pulsing heat-map zones in muted red and orange indicate areas of environmental skin stressors. The aesthetic is clinical, precise, and highly legible, typical of premium medical software." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCTojYRDMv5oaxzHUZI2wq-VBvJ4Jzi4iWKcp-LrDbteFSFmNt7KitP_BFVHmqIhdNa2LwirKYYlSxpMFE-tPBtjETKcPrHWyc-2SMeJM7hZkgH9UaLfgdSPqvjdrj_YvpYAMh1J7W0Ai8R285SE199638gR3RywSIh8ZQ9B5wzlRVFpV4MFxC6QPOhmCrW7eXjfB4fU7n9LMz14Wew5nz7mdcwF-uf2kI58pO5uO9S8gjfdE2xnhseTA')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface to-transparent"></div>
+<div class="absolute top-4 left-4 glass-card px-3 py-1.5 rounded-full flex items-center gap-2">
+<span class="relative flex h-3 w-3">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-error opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3 w-3 bg-error"></span>
+</span>
+<span class="font-label-sm text-label-sm text-on-surface">UV Index High</span>
+</div>
+</div>
+<div class="p-6 -mt-8 relative z-10">
+<h4 class="font-headline-md text-headline-md text-on-surface mb-2">Active Environmental Factors</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-4">Current conditions near you may increase skin sensitivity.</p>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-surface-container p-3 rounded-xl border border-surface-variant">
+<div class="text-on-surface-variant mb-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">sunny</span>
+<span class="font-label-sm text-label-sm">UV Index</span>
+</div>
+<div class="font-headline-md text-headline-md text-error">8.2 <span class="font-label-sm text-label-sm text-on-surface-variant font-normal">Very High</span></div>
+</div>
+<div class="bg-surface-container p-3 rounded-xl border border-surface-variant">
+<div class="text-on-surface-variant mb-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">air</span>
+<span class="font-label-sm text-label-sm">Air Quality</span>
+</div>
+<div class="font-headline-md text-headline-md text-secondary">42 <span class="font-label-sm text-label-sm text-on-surface-variant font-normal">Good</span></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Mobile Bottom Nav (Hidden on Desktop) -->
+<nav class="md:hidden fixed bottom-0 w-full bg-surface border-t border-outline-variant shadow-[0_-4px_20px_rgba(0,0,0,0.05)] z-50 px-2 py-2 flex justify-around items-center pb-safe">
+<a class="flex flex-col items-center p-2 text-primary" href="#">
+<div class="bg-primary-container rounded-full px-4 py-1 mb-1">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+</div>
+<span class="font-label-sm text-label-sm text-primary">Home</span>
+</a>
+<a class="flex flex-col items-center p-2 text-on-surface-variant" href="#">
+<div class="px-4 py-1 mb-1">
+<span class="material-symbols-outlined">medical_services</span>
+</div>
+<span class="font-label-sm text-label-sm">Scan</span>
+</a>
+<a class="flex flex-col items-center p-2 text-on-surface-variant" href="#">
+<div class="px-4 py-1 mb-1">
+<span class="material-symbols-outlined">map</span>
+</div>
+<span class="font-label-sm text-label-sm">Map</span>
+</a>
+<a class="flex flex-col items-center p-2 text-on-surface-variant" href="#">
+<div class="px-4 py-1 mb-1 relative">
+<span class="absolute top-1 right-3 w-2 h-2 bg-error rounded-full border-2 border-surface"></span>
+<span class="material-symbols-outlined">notifications</span>
+</div>
+<span class="font-label-sm text-label-sm">Alerts</span>
+</a>
+</nav>
+</body></html>
