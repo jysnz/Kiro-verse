@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DermAI - Outbreak Alert</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "secondary-fixed": "#d4e3ff",
+                      "on-primary-fixed": "#001b3e",
+                      "on-surface": "#0b1c30",
+                      "on-tertiary": "#ffffff",
+                      "tertiary-fixed": "#dde3eb",
+                      "surface-variant": "#d3e4fe",
+                      "on-primary": "#ffffff",
+                      "tertiary-container": "#555c62",
+                      "tertiary": "#3e444b",
+                      "surface-container-high": "#dce9ff",
+                      "inverse-on-surface": "#eaf1ff",
+                      "on-surface-variant": "#424751",
+                      "on-tertiary-fixed-variant": "#41474e",
+                      "surface-container-lowest": "#ffffff",
+                      "secondary": "#005fac",
+                      "on-tertiary-fixed": "#161c22",
+                      "surface-container-low": "#eff4ff",
+                      "on-error-container": "#93000a",
+                      "surface-container-highest": "#d3e4fe",
+                      "outline-variant": "#c2c6d3",
+                      "inverse-surface": "#213145",
+                      "inverse-primary": "#aac7ff",
+                      "on-secondary-fixed": "#001c39",
+                      "primary-fixed-dim": "#aac7ff",
+                      "background": "#f8f9ff",
+                      "secondary-container": "#5fa6fd",
+                      "surface-container": "#e5eeff",
+                      "secondary-fixed-dim": "#a4c9ff",
+                      "on-tertiary-container": "#ced4dc",
+                      "primary-container": "#1e5aa8",
+                      "primary": "#004287",
+                      "on-secondary": "#ffffff",
+                      "surface-dim": "#cbdbf5",
+                      "error": "#ba1a1a",
+                      "outline": "#737782",
+                      "on-primary-fixed-variant": "#00458d",
+                      "tertiary-fixed-dim": "#c1c7cf",
+                      "surface-bright": "#f8f9ff",
+                      "on-error": "#ffffff",
+                      "on-primary-container": "#bed4ff",
+                      "surface": "#f8f9ff",
+                      "on-secondary-fixed-variant": "#004884",
+                      "error-container": "#ffdad6",
+                      "on-secondary-container": "#003a6d",
+                      "primary-fixed": "#d6e3ff",
+                      "on-background": "#0b1c30",
+                      "surface-tint": "#235eac"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "container-max": "1280px",
+                      "margin-mobile": "16px",
+                      "gutter": "24px",
+                      "margin-desktop": "40px",
+                      "base": "8px",
+                      "stack-lg": "48px",
+                      "stack-sm": "12px",
+                      "stack-md": "24px"
+              },
+              "fontFamily": {
+                      "headline-md": ["Public Sans"],
+                      "headline-lg": ["Public Sans"],
+                      "headline-lg-mobile": ["Public Sans"],
+                      "label-md": ["Public Sans"],
+                      "label-sm": ["Public Sans"],
+                      "headline-xl": ["Public Sans"],
+                      "body-lg": ["Public Sans"],
+                      "body-md": ["Public Sans"]
+              },
+              "fontSize": {
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                      "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                      "headline-xl": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        body { font-family: 'Public Sans', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .icon-fill { font-variation-settings: 'FILL' 1; }
+        
+        .pulse-animation {
+            animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(186, 26, 26, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(186, 26, 26, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(186, 26, 26, 0); }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col">
+<!-- TopNavBar (Web) -->
+<nav class="hidden md:flex bg-surface dark:bg-inverse-surface border-b border-outline-variant shadow-sm w-full sticky top-0 z-50">
+<div class="flex justify-between items-center w-full px-margin-desktop max-w-container-max mx-auto h-16">
+<div class="flex items-center gap-8">
+<span class="font-headline-lg text-headline-lg text-primary dark:text-primary-fixed-dim tracking-tight">DermAI</span>
+<div class="flex gap-6">
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors font-label-md text-label-md" href="#">Home</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors font-label-md text-label-md" href="#">Scan</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors font-label-md text-label-md" href="#">Map</a>
+<a class="text-primary dark:text-primary-fixed-dim border-b-2 border-primary dark:border-primary-fixed-dim pb-1 opacity-80 scale-95 transition-all font-label-md text-label-md" href="#">Alerts</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</div>
+</nav>
+<!-- SideNavBar (Mobile Bottom Nav equivalent omitted for focused alert view as per guidelines, but retaining shell structure for desktop) -->
+<div class="flex flex-1 overflow-hidden">
+<!-- SideNav Desktop -->
+<aside class="hidden lg:flex flex-col h-full py-6 bg-surface-container dark:bg-inverse-surface border-r border-outline-variant shadow-md docked left-0 w-64 flex-shrink-0 z-40 relative">
+<div class="px-6 mb-8">
+<h2 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim">DermAI Network</h2>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-1">Skin health monitoring</p>
+</div>
+<nav class="flex flex-col gap-2 flex-1">
+<a class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-variant dark:hover:bg-on-surface-variant/10 rounded-xl mx-2 px-4 py-3 flex items-center gap-3 font-label-md text-label-md transition-all" href="#">
+<span class="material-symbols-outlined">home</span> Home
+                </a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-variant dark:hover:bg-on-surface-variant/10 rounded-xl mx-2 px-4 py-3 flex items-center gap-3 font-label-md text-label-md transition-all" href="#">
+<span class="material-symbols-outlined">medical_services</span> Scan
+                </a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-variant dark:hover:bg-on-surface-variant/10 rounded-xl mx-2 px-4 py-3 flex items-center gap-3 font-label-md text-label-md transition-all" href="#">
+<span class="material-symbols-outlined">map</span> Map
+                </a>
+<a class="bg-primary-container dark:bg-primary text-on-primary-container dark:text-on-primary rounded-xl mx-2 px-4 py-3 flex items-center gap-3 font-label-md text-label-md scale-98 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined icon-fill">notifications</span> Alerts
+                </a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-variant dark:hover:bg-on-surface-variant/10 rounded-xl mx-2 px-4 py-3 flex items-center gap-3 font-label-md text-label-md transition-all" href="#">
+<span class="material-symbols-outlined">person</span> Profile
+                </a>
+</nav>
+<div class="px-4 mt-auto">
+<button class="w-full bg-primary text-on-primary rounded-full py-3 font-label-md text-label-md hover:opacity-90 transition-opacity shadow-sm">Start New Scan</button>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 overflow-y-auto w-full">
+<!-- Mobile Header Alert Banner -->
+<div class="md:hidden bg-error text-on-error w-full px-margin-mobile py-4 flex items-center gap-3 sticky top-0 z-50 shadow-md">
+<span class="material-symbols-outlined pulse-animation">warning</span>
+<div>
+<h1 class="font-headline-md text-headline-md">Outbreak Detected</h1>
+<p class="font-body-md text-body-md opacity-90">In Your Area</p>
+</div>
+</div>
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-stack-lg flex flex-col gap-stack-lg">
+<!-- Desktop Header Alert Banner -->
+<div class="hidden md:flex bg-error-container border border-error/20 rounded-xl p-6 items-center justify-between shadow-sm pulse-animation relative overflow-hidden">
+<div class="absolute top-0 left-0 w-2 h-full bg-error"></div>
+<div class="flex items-center gap-4">
+<div class="bg-error text-on-error rounded-full p-3 flex items-center justify-center">
+<span class="material-symbols-outlined text-[32px]">coronavirus</span>
+</div>
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-error-container">Outbreak Detected in Your Area</h1>
+<p class="font-body-lg text-body-lg text-on-error-container/80 mt-1">High severity cluster identified within a 5-mile radius.</p>
+</div>
+</div>
+<div class="flex items-center gap-2 bg-surface/50 rounded-full px-4 py-2 border border-error/30">
+<span class="w-3 h-3 rounded-full bg-error animate-pulse"></span>
+<span class="font-label-md text-label-md text-on-error-container uppercase tracking-wider">Critical Alert</span>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Left Column: Map & Details -->
+<div class="md:col-span-7 flex flex-col gap-gutter">
+<!-- Map Card -->
+<div class="bg-surface rounded-xl border border-outline-variant shadow-[0_4px_20px_rgba(0,0,0,0.04)] overflow-hidden flex flex-col h-full">
+<div class="p-4 border-b border-outline-variant flex justify-between items-center bg-surface-container-low">
+<h2 class="font-headline-md text-headline-md text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">location_on</span> Affected Area
+                                </h2>
+<span class="font-label-sm text-label-sm bg-surface-variant text-on-surface-variant px-2 py-1 rounded">Updated 10 min ago</span>
+</div>
+<div class="relative h-64 md:h-80 w-full bg-surface-container-highest">
+<!-- Placeholder for Map Image -->
+<img class="w-full h-full object-cover" data-alt="A highly detailed, modern, clinical-style map interface showing a suburban area. The map uses a light-mode color palette primarily consisting of soft grays, whites, and pale blues. A specific neighborhood is highlighted with a striking, semi-transparent crimson red overlay, indicating an outbreak zone. The UI elements around the map are sleek and minimal, emphasizing medical precision and clean data visualization." data-location="Seattle" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_e_M_FXsVNvBmTWDnR2H7BvWcdBvqTRI-kj_YHMab1DyMy7ocxOrMfyP_sAIxVlYrAsH7XzR_s_aYmeQBbWb2EoRADd-5rMTd5RVCA6QQRLhARUKjpbTr-lgSFQBfIJPEHFbqQZtDAZobHxDABf7a_0tU8nZo7wAU_GWURuO_bTxyQW82xNA0aY0ME5VIG_r8vZSz037CHkDlWMvngTX4C7gSWlaZaNbIk5vJKBe7fLv-bI5U7Z6MmQ"/>
+<!-- Overlay UI on Map -->
+<div class="absolute bottom-4 right-4 bg-surface/90 backdrop-blur-sm p-3 rounded-lg border border-outline-variant shadow-sm flex flex-col gap-1">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+<span class="font-label-sm text-label-sm text-on-surface">Hotspot Zone</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-outline-variant"></span>
+<span class="font-label-sm text-label-sm text-on-surface">Safe Zone</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Outbreak Details -->
+<div class="bg-surface rounded-xl border border-outline-variant shadow-[0_4px_20px_rgba(0,0,0,0.04)] p-6">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-4">Condition Details</h3>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-surface-container-low p-4 rounded-lg">
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-1">Identified Condition</p>
+<p class="font-body-lg text-body-lg font-semibold text-primary">Atypical Dermatitis Strain</p>
+</div>
+<div class="bg-surface-container-low p-4 rounded-lg">
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-1">Transmission Rate</p>
+<p class="font-body-lg text-body-lg font-semibold text-error">High / Contact</p>
+</div>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-4 leading-relaxed">
+                                Local health authorities have reported a sudden spike in dermatological cases matching specific atypical patterns within your immediate vicinity. The AI diagnostic network has aggregated these reports to issue this localized alert.
+                            </p>
+</div>
+</div>
+<!-- Right Column: Actions & Checklist -->
+<div class="md:col-span-5 flex flex-col gap-gutter">
+<!-- Primary Actions Card -->
+<div class="bg-surface rounded-xl border border-outline-variant shadow-[0_4px_20px_rgba(0,0,0,0.04)] p-6 flex flex-col gap-4">
+<h3 class="font-headline-md text-headline-md text-on-surface">Your Next Steps</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-2">Immediate actions recommended to ensure your safety and contribute to community health tracking.</p>
+<button class="w-full bg-primary-container text-on-primary-container hover:opacity-90 rounded-full py-3 font-label-md text-label-md flex justify-center items-center gap-2 transition-all shadow-sm">
+<span class="material-symbols-outlined">visibility</span> View Detailed Report
+                            </button>
+<button class="w-full bg-surface text-primary border border-outline hover:bg-surface-container-low rounded-full py-3 font-label-md text-label-md flex justify-center items-center gap-2 transition-all">
+<span class="material-symbols-outlined">share</span> Share Alert Safely
+                            </button>
+</div>
+<!-- Checklist Card -->
+<div class="bg-surface rounded-xl border border-outline-variant shadow-[0_4px_20px_rgba(0,0,0,0.04)] p-6 flex-1">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">checklist</span> Recommended Actions
+                            </h3>
+<ul class="flex flex-col gap-3">
+<li class="flex items-start gap-3 p-3 bg-surface-container-low rounded-lg border-l-4 border-primary">
+<span class="material-symbols-outlined text-primary mt-0.5">center_focus_strong</span>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Perform a Full Body Scan</p>
+<p class="font-body-sm text-body-md text-on-surface-variant text-sm mt-1">Use the DermAI app to log your current skin baseline.</p>
+</div>
+</li>
+<li class="flex items-start gap-3 p-3 bg-surface-container-low rounded-lg border-l-4 border-secondary">
+<span class="material-symbols-outlined text-secondary mt-0.5">sanitizer</span>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Avoid Shared Contact Surfaces</p>
+<p class="font-body-sm text-body-md text-on-surface-variant text-sm mt-1">Exercise caution at local gyms, pools, and public transit.</p>
+</div>
+</li>
+<li class="flex items-start gap-3 p-3 bg-surface-container-low rounded-lg border-l-4 border-outline-variant">
+<span class="material-symbols-outlined text-on-surface-variant mt-0.5">notifications_active</span>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Enable Push Notifications</p>
+<p class="font-body-sm text-body-md text-on-surface-variant text-sm mt-1">Ensure you receive real-time updates as the situation evolves.</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<footer class="w-full bg-surface-container-low dark:bg-on-surface border-t border-outline-variant py-stack-md px-margin-desktop mt-auto">
+<div class="flex flex-col md:flex-row justify-between items-center gap-4 max-w-container-max mx-auto">
+<span class="font-headline-sm text-headline-sm text-primary dark:text-primary-fixed-dim">DermAI</span>
+<p class="font-body-md text-body-md text-on-surface dark:text-surface-variant text-center">© 2024 DermAI Network. For clinical diagnostic support only.</p>
+<div class="flex flex-wrap justify-center gap-4 font-label-sm text-label-sm text-on-surface-variant dark:text-surface-variant">
+<a class="hover:text-primary dark:hover:text-primary-fixed-dim underline transition-all" href="#">Medical Disclaimer</a>
+<a class="hover:text-primary dark:hover:text-primary-fixed-dim underline transition-all" href="#">Privacy Policy</a>
+<a class="hover:text-primary dark:hover:text-primary-fixed-dim underline transition-all" href="#">Terms of Service</a>
+<a class="hover:text-primary dark:hover:text-primary-fixed-dim underline transition-all" href="#">Contact Support</a>
+</div>
+</div>
+</footer>
+</main>
+</div>
+</body></html>

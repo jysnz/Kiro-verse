@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DermAI - Scan Skin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed": "#d4e3ff",
+                        "on-primary-fixed": "#001b3e",
+                        "on-surface": "#0b1c30",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed": "#dde3eb",
+                        "surface-variant": "#d3e4fe",
+                        "on-primary": "#ffffff",
+                        "tertiary-container": "#555c62",
+                        "tertiary": "#3e444b",
+                        "surface-container-high": "#dce9ff",
+                        "inverse-on-surface": "#eaf1ff",
+                        "on-surface-variant": "#424751",
+                        "on-tertiary-fixed-variant": "#41474e",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary": "#005fac",
+                        "on-tertiary-fixed": "#161c22",
+                        "surface-container-low": "#eff4ff",
+                        "on-error-container": "#93000a",
+                        "surface-container-highest": "#d3e4fe",
+                        "outline-variant": "#c2c6d3",
+                        "inverse-surface": "#213145",
+                        "inverse-primary": "#aac7ff",
+                        "on-secondary-fixed": "#001c39",
+                        "primary-fixed-dim": "#aac7ff",
+                        "background": "#f8f9ff",
+                        "secondary-container": "#5fa6fd",
+                        "surface-container": "#e5eeff",
+                        "secondary-fixed-dim": "#a4c9ff",
+                        "on-tertiary-container": "#ced4dc",
+                        "primary-container": "#1e5aa8",
+                        "primary": "#004287",
+                        "on-secondary": "#ffffff",
+                        "surface-dim": "#cbdbf5",
+                        "error": "#ba1a1a",
+                        "outline": "#737782",
+                        "on-primary-fixed-variant": "#00458d",
+                        "tertiary-fixed-dim": "#c1c7cf",
+                        "surface-bright": "#f8f9ff",
+                        "on-error": "#ffffff",
+                        "on-primary-container": "#bed4ff",
+                        "surface": "#f8f9ff",
+                        "on-secondary-fixed-variant": "#004884",
+                        "error-container": "#ffdad6",
+                        "on-secondary-container": "#003a6d",
+                        "primary-fixed": "#d6e3ff",
+                        "on-background": "#0b1c30",
+                        "surface-tint": "#235eac"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-max": "1280px",
+                        "margin-mobile": "16px",
+                        "gutter": "24px",
+                        "margin-desktop": "40px",
+                        "base": "8px",
+                        "stack-lg": "48px",
+                        "stack-sm": "12px",
+                        "stack-md": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Public Sans"],
+                        "headline-lg": ["Public Sans"],
+                        "headline-lg-mobile": ["Public Sans"],
+                        "label-md": ["Public Sans"],
+                        "label-sm": ["Public Sans"],
+                        "headline-xl": ["Public Sans"],
+                        "body-lg": ["Public Sans"],
+                        "body-md": ["Public Sans"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "600" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "headline-xl": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .upload-dashed {
+            background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='24' ry='24' stroke='%23c2c6d3' stroke-width='4' stroke-dasharray='12%2c 12' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+            border-radius: 24px;
+            transition: all 0.3s ease;
+        }
+        .upload-dashed:hover, .upload-dashed.dragover {
+            background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='24' ry='24' stroke='%23005fac' stroke-width='4' stroke-dasharray='12%2c 12' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+            background-color: #eff4ff;
+        }
+        .loader {
+            width: 48px;
+            height: 48px;
+            border: 5px solid #d3e4fe;
+            border-bottom-color: #1e5aa8;
+            border-radius: 50%;
+            display: inline-block;
+            box-sizing: border-box;
+            animation: rotation 1s linear infinite;
+        }
+        @keyframes rotation {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex antialiased">
+<!-- SideNavBar -->
+<nav class="bg-surface-container dark:bg-inverse-surface text-primary dark:text-primary-fixed-dim hidden lg:flex flex-col h-full py-6 docked left-0 w-64 border-r border-outline-variant shadow-md fixed z-20">
+<div class="px-6 mb-8 flex flex-col gap-2">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-surface-variant flex items-center justify-center">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a user or a generic medical avatar icon in a high-key, modern light-mode style, emphasizing trust and cleanliness with soft blue undertones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCaPZYhl0K9a9S91ZfPh1ZBfKIOUj8XtrQjW3Ojtfwzzs6HOVfP_bfaRr_bkMDXf0HZ9eIY4usDNf75zOikwNYr6K2ou68MG4kuC1oIMJ3J46EisFxQQlt1R0ElOZZvXrMzenCwjAJbICrMl6KNxz68TrMzjZVxPFfAbgzFPIcWv6FW1finUPISoX8uhfnIovbjyw8tnRo--1RjG8h6di1QgNIcmDHngQhONVsEGTBCdzTMtOj375HznQ"/>
+</div>
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim">DermAI Network</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Skin health monitoring</p>
+</div>
+</div>
+<ul class="flex-1 flex flex-col gap-2 px-4 font-label-md text-label-md">
+<li>
+<a class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-variant dark:hover:bg-on-surface-variant/10 rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-all hover:bg-surface-variant dark:hover:bg-on-surface-variant/20" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span>Home</span>
+</a>
+</li>
+<li>
+<a class="bg-primary-container dark:bg-primary text-on-primary-container dark:text-on-primary rounded-xl mx-2 px-4 py-3 flex items-center gap-3 scale-98 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined fill" data-icon="medical_services" data-weight="fill">medical_services</span>
+<span>Scan</span>
+</a>
+</li>
+<li>
+<a class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-variant dark:hover:bg-on-surface-variant/10 rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-all hover:bg-surface-variant dark:hover:bg-on-surface-variant/20" href="#">
+<span class="material-symbols-outlined" data-icon="map">map</span>
+<span>Map</span>
+</a>
+</li>
+<li>
+<a class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-variant dark:hover:bg-on-surface-variant/10 rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-all hover:bg-surface-variant dark:hover:bg-on-surface-variant/20" href="#">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span>Alerts</span>
+</a>
+</li>
+<li>
+<a class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-variant dark:hover:bg-on-surface-variant/10 rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-all hover:bg-surface-variant dark:hover:bg-on-surface-variant/20" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span>Profile</span>
+</a>
+</li>
+</ul>
+<div class="px-6 mt-auto">
+<button class="w-full bg-primary-container text-on-primary-container font-label-md text-label-md py-3 rounded-full hover:shadow-sm transition-all flex justify-center items-center gap-2">
+<span class="material-symbols-outlined">add_circle</span>
+                Start New Scan
+            </button>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 lg:ml-64 flex flex-col min-h-screen relative">
+<!-- TopAppBar (Mobile Only) -->
+<header class="bg-surface border-b border-outline-variant shadow-sm flex lg:hidden justify-between items-center w-full px-margin-mobile h-16 fixed top-0 z-10">
+<div class="font-headline-lg-mobile text-headline-lg-mobile text-primary tracking-tight">DermAI</div>
+<button class="text-primary p-2">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</header>
+<div class="flex-1 w-full max-w-container-max mx-auto px-margin-mobile lg:px-margin-desktop pt-24 lg:pt-12 pb-12 flex flex-col items-center justify-center relative">
+<div class="w-full max-w-2xl text-center mb-stack-md">
+<h2 class="font-headline-xl text-headline-xl text-on-surface mb-2">New Skin Scan</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Upload a clear photo of the affected area for AI analysis.</p>
+</div>
+<!-- Upload Zone -->
+<div class="w-full max-w-2xl aspect-[4/3] sm:aspect-video upload-dashed bg-surface-container-lowest flex flex-col items-center justify-center p-stack-lg cursor-pointer group relative overflow-hidden" id="upload-zone">
+<!-- Default State -->
+<div class="flex flex-col items-center gap-4 text-center z-10 pointer-events-none transition-opacity duration-300" id="upload-content">
+<div class="w-20 h-20 bg-surface-container rounded-full flex items-center justify-center text-primary group-hover:scale-110 group-hover:bg-primary-container group-hover:text-on-primary-container transition-all duration-300 shadow-sm">
+<span class="material-symbols-outlined text-4xl">add_a_photo</span>
+</div>
+<div>
+<p class="font-headline-md text-headline-md text-on-surface mb-1">Drag and drop your photo here</p>
+<p class="font-body-md text-body-md text-outline">or click to browse files</p>
+<p class="font-label-sm text-label-sm text-outline mt-4">Supported formats: JPG, PNG, HEIC. Max size: 10MB.</p>
+</div>
+</div>
+<!-- Preview State (Hidden by default) -->
+<div class="absolute inset-0 hidden z-20 bg-surface-container-lowest rounded-[24px] overflow-hidden" id="image-preview">
+<img alt="Selected skin area" class="w-full h-full object-contain" id="preview-img" src=""/>
+<button class="absolute top-4 right-4 bg-surface/80 text-error p-2 rounded-full hover:bg-error-container transition-colors shadow-sm" id="remove-btn">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<input accept="image/jpeg, image/png, image/heic" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-30" id="file-input" type="file"/>
+</div>
+<!-- Guidelines Card -->
+<div class="w-full max-w-2xl mt-stack-md bg-surface-container-low border border-outline-variant rounded-xl p-6 shadow-sm">
+<h3 class="font-label-md text-label-md text-on-surface flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary">info</span>
+                    Photo Guidelines
+                </h3>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+<div class="flex flex-col items-center text-center">
+<span class="material-symbols-outlined text-outline mb-2">light_mode</span>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Good lighting, natural daylight preferred</p>
+</div>
+<div class="flex flex-col items-center text-center">
+<span class="material-symbols-outlined text-outline mb-2">center_focus_strong</span>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Keep the affected area clearly in focus</p>
+</div>
+<div class="flex flex-col items-center text-center">
+<span class="material-symbols-outlined text-outline mb-2">straighten</span>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Maintain a distance of 4-6 inches</p>
+</div>
+</div>
+</div>
+<!-- Action Button -->
+<div class="mt-stack-lg w-full max-w-2xl flex justify-end">
+<button class="bg-surface-variant text-on-surface-variant font-label-md text-label-md px-8 py-4 rounded-full transition-all duration-300 flex items-center gap-2 cursor-not-allowed opacity-70" disabled="" id="analyze-btn">
+<span class="material-symbols-outlined">auto_awesome</span>
+                    Analyze Skin
+                </button>
+</div>
+<!-- Loading Overlay -->
+<div class="absolute inset-0 bg-surface/90 backdrop-blur-sm z-50 hidden flex-col items-center justify-center rounded-xl" id="loading-overlay">
+<div class="bg-surface-container-highest p-8 rounded-2xl shadow-lg flex flex-col items-center max-w-sm w-full text-center border border-outline-variant">
+<span class="loader mb-6"></span>
+<h3 class="font-headline-md text-headline-md text-primary mb-2">AI is analyzing...</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Scanning visual patterns and comparing with dermatological models. This may take a few moments.</p>
+</div>
+</div>
+</div>
+</main>
+<script>
+        const uploadZone = document.getElementById('upload-zone');
+        const fileInput = document.getElementById('file-input');
+        const uploadContent = document.getElementById('upload-content');
+        const imagePreview = document.getElementById('image-preview');
+        const previewImg = document.getElementById('preview-img');
+        const removeBtn = document.getElementById('remove-btn');
+        const analyzeBtn = document.getElementById('analyze-btn');
+        const loadingOverlay = document.getElementById('loading-overlay');
+
+        // Drag and drop visual feedback
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            uploadZone.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            uploadZone.addEventListener(eventName, () => {
+                uploadZone.classList.add('dragover');
+            }, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            uploadZone.addEventListener(eventName, () => {
+                uploadZone.classList.remove('dragover');
+            }, false);
+        });
+
+        // Handle file drop
+        uploadZone.addEventListener('drop', handleDrop, false);
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            if(files.length) {
+                fileInput.files = files;
+                handleFiles(files[0]);
+            }
+        }
+
+        // Handle file selection via click
+        fileInput.addEventListener('change', function() {
+            if(this.files.length) {
+                handleFiles(this.files[0]);
+            }
+        });
+
+        function handleFiles(file) {
+            if (!file.type.startsWith('image/')) return;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                previewImg.src = e.target.result;
+                uploadContent.classList.add('hidden');
+                imagePreview.classList.remove('hidden');
+                fileInput.classList.add('hidden'); // Hide input to allow interaction with remove button
+                
+                // Enable button
+                analyzeBtn.disabled = false;
+                analyzeBtn.classList.remove('bg-surface-variant', 'text-on-surface-variant', 'cursor-not-allowed', 'opacity-70');
+                analyzeBtn.classList.add('bg-primary-container', 'text-on-primary-container', 'hover:shadow-md', 'hover:scale-[1.02]', 'cursor-pointer');
+            }
+            reader.readAsDataURL(file);
+        }
+
+        // Remove image
+        removeBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            fileInput.value = '';
+            previewImg.src = '';
+            uploadContent.classList.remove('hidden');
+            imagePreview.classList.add('hidden');
+            fileInput.classList.remove('hidden');
+            
+            // Disable button
+            analyzeBtn.disabled = true;
+            analyzeBtn.classList.add('bg-surface-variant', 'text-on-surface-variant', 'cursor-not-allowed', 'opacity-70');
+            analyzeBtn.classList.remove('bg-primary-container', 'text-on-primary-container', 'hover:shadow-md', 'hover:scale-[1.02]', 'cursor-pointer');
+        });
+
+        // Simulate Analysis
+        analyzeBtn.addEventListener('click', () => {
+            if(analyzeBtn.disabled) return;
+            
+            loadingOverlay.classList.remove('hidden');
+            loadingOverlay.classList.add('flex');
+            
+            // Simulate network request
+            setTimeout(() => {
+                loadingOverlay.classList.add('hidden');
+                loadingOverlay.classList.remove('flex');
+                alert('Analysis complete! Redirecting to results...');
+                // In a real app, you would redirect here
+            }, 3000);
+        });
+    </script>
+</body></html>
