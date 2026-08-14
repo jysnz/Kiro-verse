@@ -1,18 +1,33 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import DashboardLayout from './DashboardLayout';
+import { predictSkinDisease, warmUpKiroverseServer, PredictionError } from '@/lib/kiroverse';
 
 type ScanState = 'idle' | 'preview' | 'analyzing' | 'complete';
 
+const LAST_SCAN_KEY = 'kiroverse:lastScan';
+
 export default function ScanUpload() {
+  const router = useRouter();
   const [state, setState] = useState<ScanState>('idle');
   const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Give the free-tier Render instance a head start waking up so the real
+  // /predict-skin-disease call (fired on "Analyze") doesn't eat the cold start.
+  useEffect(() => {
+    warmUpKiroverseServer();
+  }, []);
 
   const handleFileSelect = (file: File) => {
     const url = URL.createObjectURL(file);
     setImageUrl(url);
+    setSelectedFile(file);
+    setError(null);
     setState('preview');
   };
 
@@ -34,15 +49,35 @@ export default function ScanUpload() {
   const removeImage = () => {
     if (imageUrl) URL.revokeObjectURL(imageUrl);
     setImageUrl(null);
+    setSelectedFile(null);
+    setError(null);
     setState('idle');
     if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
-  const handleAnalyze = () => {
+  const handleAnalyze = async () => {
+    if (!selectedFile || !imageUrl) return;
     setState('analyzing');
-    setTimeout(() => {
+    setError(null);
+
+    try {
+      const prediction = await predictSkinDisease(selectedFile);
+      sessionStorage.setItem(
+        LAST_SCAN_KEY,
+        JSON.stringify({
+          imageUrl,
+          scannedAt: new Date().toISOString(),
+          ...prediction,
+        })
+      );
       setState('complete');
-    }, 3000);
+      router.push('/results');
+    } catch (err) {
+      setError(
+        err instanceof PredictionError ? err.message : 'Something went wrong while analyzing your photo.'
+      );
+      setState('preview');
+    }
   };
 
   return (
@@ -114,7 +149,9 @@ export default function ScanUpload() {
               <div className="flex flex-col items-center">
                 <div className="w-12 h-12 border-4 border-[#004287] border-t-transparent rounded-full animate-spin mb-4" />
                 <p className="text-[#0b1c30] font-medium">Analyzing your photo...</p>
-                <p className="text-sm text-[#004287] mt-1">This may take a few moments</p>
+                <p className="text-sm text-[#004287] mt-1">
+                  This may take up to a minute if the server is waking up
+                </p>
               </div>
             )}
 
@@ -165,6 +202,14 @@ export default function ScanUpload() {
             </div>
           </div>
         </div>
+
+        {/* Error Banner */}
+        {error && (
+          <div className="max-w-2xl mx-auto mb-6 px-4 py-3 bg-[#ffdad6] text-[#93000a] text-sm rounded-[12px] flex items-start gap-2">
+            <span className="material-symbols-outlined text-lg">error</span>
+            <span>{error}</span>
+          </div>
+        )}
 
         {/* Analyze Button */}
         <div className="flex justify-center">
